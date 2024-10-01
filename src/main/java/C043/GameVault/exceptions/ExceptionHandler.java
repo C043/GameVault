@@ -14,7 +14,7 @@ public class ExceptionHandler {
     public ErrorDTO handleUnauthorized(UnauthorizedException ex) {
         return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
     }
-   
+
     @org.springframework.web.bind.annotation.ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDTO handleBadRequest(BadRequestException ex) {
