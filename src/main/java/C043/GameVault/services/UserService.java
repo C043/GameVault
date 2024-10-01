@@ -35,6 +35,10 @@ public class UserService {
         return found;
     }
 
+    public User findById(int id) {
+        return this.userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
     public User registerUser(NewUserDTO body) {
         User foundByEmail = this.userRepository.findByEmail(body.email());
         if (foundByEmail != null) throw new BadRequestException("User with this email already exists");
