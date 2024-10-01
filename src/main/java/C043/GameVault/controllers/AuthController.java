@@ -9,12 +9,10 @@ import C043.GameVault.security.Validation;
 import C043.GameVault.services.AuthService;
 import C043.GameVault.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,6 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
     public RespDTO register(@RequestBody @Validated NewUserDTO body, BindingResult validation) {
         this.validation.validate(validation);
         User newUser = this.userService.registerUser(body);
