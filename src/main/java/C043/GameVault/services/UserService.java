@@ -5,6 +5,7 @@ import C043.GameVault.exceptions.BadRequestException;
 import C043.GameVault.payloads.NewUserDTO;
 import C043.GameVault.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder bcrypt;
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
@@ -23,7 +27,7 @@ public class UserService {
         if (foundByEmail != null) throw new BadRequestException("User with this email already exists");
         User foundByUsername = this.userRepository.findByUsername(body.username());
         if (foundByUsername != null) throw new BadRequestException("User with this username already exists");
-        User newUser = new User(body.username(), body.name(), body.surname(), body.email(), body.password());
+        User newUser = new User(body.username(), body.name(), body.surname(), body.email(), bcrypt.encode(body.password()));
         newUser.setAvatar("https://ui-avatars.com/api/?background=random&name=" + body.username());
         // To Do: settare una cover random a tema videogiochi
         return this.userRepository.save(newUser);

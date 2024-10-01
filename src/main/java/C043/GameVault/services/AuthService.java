@@ -6,6 +6,7 @@ import C043.GameVault.payloads.AuthDTO;
 import C043.GameVault.repositories.UserRepository;
 import C043.GameVault.security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,9 +17,12 @@ public class AuthService {
     @Autowired
     private JWTTools jwtTools;
 
+    @Autowired
+    private PasswordEncoder bcrypt;
+
     public String checkCredentialsAndGenerateToken(AuthDTO body) {
         User found = this.userRepository.findByEmail(body.email());
-        if (found.getPassword().equals(body.password())) {
+        if (bcrypt.matches(body.password(), found.getPassword())) {
             return jwtTools.createToken(found);
         } else {
             throw new UnauthorizedException("Wrong credentials");
