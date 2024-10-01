@@ -1,5 +1,6 @@
 package C043.GameVault.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties({"password"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
