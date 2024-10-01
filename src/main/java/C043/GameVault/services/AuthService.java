@@ -6,7 +6,9 @@ import C043.GameVault.payloads.AuthDTO;
 import C043.GameVault.repositories.UserRepository;
 import C043.GameVault.security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthService {
     @Autowired
     private UserRepository userRepository;
