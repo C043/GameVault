@@ -2,6 +2,7 @@ package C043.GameVault.services;
 
 import C043.GameVault.entities.User;
 import C043.GameVault.exceptions.BadRequestException;
+import C043.GameVault.exceptions.NotFoundException;
 import C043.GameVault.payloads.NewUserDTO;
 import C043.GameVault.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,18 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    public User getUserByEmail(String email) {
+        User found = this.userRepository.findByEmail(email);
+        if (found == null) throw new NotFoundException("User not found");
+        return found;
+    }
+
+    public User getUserByUsername(String username) {
+        User found = this.userRepository.findByUsername(username);
+        if (found == null) throw new NotFoundException("User not found");
+        return found;
     }
 
     public User registerUser(NewUserDTO body) {
