@@ -37,4 +37,10 @@ public class GameListController {
     public List<BackLog> getBackLogByUser(@AuthenticationPrincipal User user) {
         return this.backLogService.getBackLogByUser(user);
     }
+
+    @DeleteMapping("/backlog/{backlogId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBackLog(@AuthenticationPrincipal User user, @PathVariable int backlogId) {
+        this.backLogService.deleteBackLog(user, backlogId);
+    }
 }
