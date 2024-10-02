@@ -8,6 +8,8 @@ import C043.GameVault.repositories.BackLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BackLogService {
     @Autowired
@@ -18,5 +20,9 @@ public class BackLogService {
         if (found != null) throw new BadRequestException("Game already in list");
         BackLog newBackLog = new BackLog(body.gameId(), user);
         return this.backLogRepository.save(newBackLog);
+    }
+
+    public List<BackLog> getBackLogByUser(User user) {
+        return this.backLogRepository.findAllByUser(user);
     }
 }

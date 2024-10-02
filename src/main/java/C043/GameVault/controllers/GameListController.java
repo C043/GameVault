@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/lists")
 public class GameListController {
@@ -29,5 +31,10 @@ public class GameListController {
         this.validation.validate(validation);
         BackLog newBacklog = this.backLogService.postBackLog(body, user);
         return new RespDTO(newBacklog.getId());
+    }
+
+    @GetMapping("/backlog")
+    public List<BackLog> getBackLogByUser(@AuthenticationPrincipal User user) {
+        return this.backLogService.getBackLogByUser(user);
     }
 }
