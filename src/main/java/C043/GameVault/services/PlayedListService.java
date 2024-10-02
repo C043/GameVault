@@ -18,7 +18,7 @@ public class PlayedListService {
     private PlayedListRepository playedListRepository;
 
     public PlayedList postPlaying(GameDTO body, User user) {
-        PlayedList found = this.playedListRepository.findByGameId(body.gameId());
+        PlayedList found = this.playedListRepository.findByGameIdAndUser(body.gameId(), user);
         if (found != null) throw new BadRequestException("Game already in list");
         PlayedList newPlaying = new PlayedList(body.gameId(), user);
         return this.playedListRepository.save(newPlaying);
@@ -33,7 +33,7 @@ public class PlayedListService {
     }
 
     public void deletePlayingList(User user, int id) {
-        PlayedList found = this.playedListRepository.findByGameId(id);
+        PlayedList found = this.playedListRepository.findByGameIdAndUser(id, user);
         if (found == null) throw new NotFoundException("Game not found");
         if (found.getUser().getId() != user.getId()) throw new UnauthorizedException("You don't have permissions to delete this game");
         this.playedListRepository.delete(found);

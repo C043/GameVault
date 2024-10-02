@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BackLogRepository extends JpaRepository<BackLog, Integer> {
-    BackLog findByGameId(int gameId);
+    BackLog findByGameIdAndUser(int gameId, User user);
 
     List<BackLog> findAllByUser(User user);
 }

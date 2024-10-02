@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface PlayingListRepository extends JpaRepository<PlayingList, Integer> {
-    PlayingList findByGameId(int gameId);
+    PlayingList findByGameIdAndUser(int gameId, User user);
 
     List<PlayingList> findAllByUser(User user);
 }
