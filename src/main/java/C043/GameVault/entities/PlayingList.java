@@ -7,12 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@DiscriminatorValue("backlog")
+@DiscriminatorValue("playing")
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class BackLog extends GameList {
-    public BackLog(int gameId, User user) {
+public class PlayingList extends GameList {
+    public PlayingList(int gameId, int userRating, User user) {
+        super(gameId, userRating, user);
+    }
+
+    public PlayingList(int gameId, User user) {
         super(gameId, user);
     }
 }

@@ -2,6 +2,7 @@ package C043.GameVault.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -9,6 +10,7 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "list_type")
 @Getter
 @Setter
+@NoArgsConstructor
 public abstract class GameList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +25,15 @@ public abstract class GameList {
     @ManyToOne
     @JoinColumn(name = "user_id")
     protected User user;
+
+    public GameList(int gameId, int userRating, User user) {
+        this.gameId = gameId;
+        this.userRating = userRating;
+        this.user = user;
+    }
+
+    public GameList(int gameId, User user) {
+        this.gameId = gameId;
+        this.user = user;
+    }
 }
