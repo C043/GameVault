@@ -1,12 +1,14 @@
 package C043.GameVault.controllers;
 
 import C043.GameVault.entities.BackLog;
+import C043.GameVault.entities.PlayedList;
 import C043.GameVault.entities.PlayingList;
 import C043.GameVault.entities.User;
 import C043.GameVault.payloads.GameDTO;
 import C043.GameVault.payloads.RespDTO;
 import C043.GameVault.security.Validation;
 import C043.GameVault.services.BackLogService;
+import C043.GameVault.services.PlayedListService;
 import C043.GameVault.services.PlayingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,9 @@ public class GameListController {
 
     @Autowired
     private PlayingService playingService;
+
+    @Autowired
+    private PlayedListService playedListService;
 
     @Autowired
     private Validation validation;
@@ -66,5 +71,24 @@ public class GameListController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePlaying(@AuthenticationPrincipal User user, @PathVariable int playingId) {
         this.playingService.deletePlayingList(user, playingId);
+    }
+
+    @PostMapping("/played")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RespDTO postPlayedList(@AuthenticationPrincipal User user, @RequestBody @Validated GameDTO body, BindingResult validation) {
+        this.validation.validate(validation);
+        PlayedList newPlayedList = this.playedListService.postPlaying(body, user);
+        return new RespDTO(newPlayedList.getId());
+    }
+
+    @GetMapping("/playing")
+    public List<PlayedList> getPlayedList(@AuthenticationPrincipal User user) {
+        return this.playedListService.getPlayingListByUser(user);
+    }
+
+    @DeleteMapping("/played/{playingId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePlayed(@AuthenticationPrincipal User user, @PathVariable int playingId) {
+        this.playedListService.deletePlayingList(user, playingId);
     }
 }
