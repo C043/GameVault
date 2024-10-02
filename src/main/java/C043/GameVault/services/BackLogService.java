@@ -37,7 +37,7 @@ public class BackLogService {
         BackLog found = this.backLogRepository.findByGameIdAndUser(body.gameId(), user);
         if (found != null) throw new BadRequestException("Game already in list");
         PlayedList foundPlayed = this.playedListRepository.findByGameIdAndUser(body.gameId(), user);
-        if (foundPlayed != null) this.playedListService.deletePlayingList(user, foundPlayed.getId());
+        if (foundPlayed != null) this.playedListService.deletePlayedList(user, foundPlayed.getId());
         PlayingList foundPlaying = this.playingListRepository.findByGameIdAndUser(body.gameId(), user);
         if (foundPlaying != null) this.playingService.deletePlayingList(user, foundPlaying.getGameId());
         BackLog newBackLog = new BackLog(body.gameId(), user);

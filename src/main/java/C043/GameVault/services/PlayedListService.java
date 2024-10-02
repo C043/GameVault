@@ -32,7 +32,7 @@ public class PlayedListService {
         return this.playedListRepository.findById(id).orElseThrow(() -> new NotFoundException("Game not found"));
     }
 
-    public void deletePlayingList(User user, int id) {
+    public void deletePlayedList(User user, int id) {
         PlayedList found = this.playedListRepository.findByGameIdAndUser(id, user);
         if (found == null) throw new NotFoundException("Game not found");
         if (found.getUser().getId() != user.getId()) throw new UnauthorizedException("You don't have permissions to delete this game");

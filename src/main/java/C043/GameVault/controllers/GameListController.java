@@ -89,6 +89,6 @@ public class GameListController {
     @DeleteMapping("/played/{playedId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePlayed(@AuthenticationPrincipal User user, @PathVariable int playedId) {
-        this.playedListService.deletePlayingList(user, playedId);
+        this.playedListService.deletePlayedList(user, playedId);
     }
 }

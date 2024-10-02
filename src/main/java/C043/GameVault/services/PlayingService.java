@@ -1,11 +1,15 @@
 package C043.GameVault.services;
 
+import C043.GameVault.entities.BackLog;
+import C043.GameVault.entities.PlayedList;
 import C043.GameVault.entities.PlayingList;
 import C043.GameVault.entities.User;
 import C043.GameVault.exceptions.BadRequestException;
 import C043.GameVault.exceptions.NotFoundException;
 import C043.GameVault.exceptions.UnauthorizedException;
 import C043.GameVault.payloads.GameDTO;
+import C043.GameVault.repositories.BackLogRepository;
+import C043.GameVault.repositories.PlayedListRepository;
 import C043.GameVault.repositories.PlayingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +21,26 @@ public class PlayingService {
     @Autowired
     private PlayingListRepository playingListRepository;
 
+    @Autowired
+    private BackLogRepository backLogRepository;
+
+    @Autowired
+    private BackLogService backLogService;
+
+    @Autowired
+    private PlayedListRepository playedListRepository;
+
+    @Autowired
+    private PlayedListService playedListService;
+
+
     public PlayingList postPlaying(GameDTO body, User user) {
         PlayingList found = this.playingListRepository.findByGameIdAndUser(body.gameId(), user);
         if (found != null) throw new BadRequestException("Game already in list");
+        PlayedList foundPlayed = this.playedListRepository.findByGameIdAndUser(body.gameId(), user);
+        if (foundPlayed != null) this.playedListService.deletePlayedList(user, foundPlayed.getGameId());
+        BackLog foundBackLog = this.backLogRepository.findByGameIdAndUser(body.gameId(), user);
+        if (foundBackLog != null) this.backLogService.deleteBackLog(user, foundBackLog.getGameId());
         PlayingList newPlaying = new PlayingList(body.gameId(), user);
         return this.playingListRepository.save(newPlaying);
     }
