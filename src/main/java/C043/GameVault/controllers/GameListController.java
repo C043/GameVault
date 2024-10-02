@@ -83,7 +83,7 @@ public class GameListController {
 
     @GetMapping("/played")
     public List<PlayedList> getPlayedList(@AuthenticationPrincipal User user) {
-        return this.playedListService.getPlayingListByUser(user);
+        return this.playedListService.getPlayedListByUser(user);
     }
 
     @DeleteMapping("/played/{playedId}")

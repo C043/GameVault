@@ -24,16 +24,17 @@ public class PlayedListService {
         return this.playedListRepository.save(newPlaying);
     }
 
-    public List<PlayedList> getPlayingListByUser(User user) {
+    public List<PlayedList> getPlayedListByUser(User user) {
         return this.playedListRepository.findAllByUser(user);
     }
 
-    public PlayedList getPlayingListById(int id) {
+    public PlayedList getPlayedListById(int id) {
         return this.playedListRepository.findById(id).orElseThrow(() -> new NotFoundException("Game not found"));
     }
 
     public void deletePlayingList(User user, int id) {
-        PlayedList found = this.getPlayingListById(id);
+        PlayedList found = this.playedListRepository.findByGameId(id);
+        if (found == null) throw new NotFoundException("Game not found");
         if (found.getUser().getId() != user.getId()) throw new UnauthorizedException("You don't have permissions to delete this game");
         this.playedListRepository.delete(found);
     }
