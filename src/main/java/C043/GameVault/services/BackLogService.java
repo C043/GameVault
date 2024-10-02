@@ -25,21 +25,15 @@ public class BackLogService {
     private PlayedListRepository playedListRepository;
 
     @Autowired
-    private PlayedListService playedListService;
-
-    @Autowired
     private PlayingListRepository playingListRepository;
-
-    @Autowired
-    private PlayingService playingService;
 
     public BackLog postBackLog(GameDTO body, User user) {
         BackLog found = this.backLogRepository.findByGameIdAndUser(body.gameId(), user);
         if (found != null) throw new BadRequestException("Game already in list");
         PlayedList foundPlayed = this.playedListRepository.findByGameIdAndUser(body.gameId(), user);
-        if (foundPlayed != null) this.playedListService.deletePlayedList(user, foundPlayed.getId());
+        if (foundPlayed != null) this.playedListRepository.delete(foundPlayed);
         PlayingList foundPlaying = this.playingListRepository.findByGameIdAndUser(body.gameId(), user);
-        if (foundPlaying != null) this.playingService.deletePlayingList(user, foundPlaying.getGameId());
+        if (foundPlaying != null) this.playingListRepository.delete(foundPlaying);
         BackLog newBackLog = new BackLog(body.gameId(), user);
         return this.backLogRepository.save(newBackLog);
     }
