@@ -81,14 +81,14 @@ public class GameListController {
         return new RespDTO(newPlayedList.getId());
     }
 
-    @GetMapping("/playing")
+    @GetMapping("/played")
     public List<PlayedList> getPlayedList(@AuthenticationPrincipal User user) {
         return this.playedListService.getPlayingListByUser(user);
     }
 
-    @DeleteMapping("/played/{playingId}")
+    @DeleteMapping("/played/{playedId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePlayed(@AuthenticationPrincipal User user, @PathVariable int playingId) {
-        this.playedListService.deletePlayingList(user, playingId);
+    public void deletePlayed(@AuthenticationPrincipal User user, @PathVariable int playedId) {
+        this.playedListService.deletePlayingList(user, playedId);
     }
 }

@@ -8,9 +8,11 @@ import C043.GameVault.exceptions.UnauthorizedException;
 import C043.GameVault.payloads.GameDTO;
 import C043.GameVault.repositories.PlayedListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PlayedListService {
     @Autowired
     private PlayedListRepository playedListRepository;
