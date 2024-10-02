@@ -21,13 +21,11 @@ import java.util.List;
 
 @Component
 public class JWTCheckFilter extends OncePerRequestFilter {
+    private final List<AntPathRequestMatcher> excludeList = Arrays.asList(AntPathRequestMatcher.antMatcher("/auth/**"), AntPathRequestMatcher.antMatcher("/games/**"));
     @Autowired
     private JWTTools jwtTools;
-
     @Autowired
     private UserService userService;
-
-    private List<AntPathRequestMatcher> excludeList = Arrays.asList(AntPathRequestMatcher.antMatcher("/auth/**"), AntPathRequestMatcher.antMatcher("/games/**"));
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
