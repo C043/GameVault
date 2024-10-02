@@ -12,15 +12,15 @@ import lombok.Setter;
 public abstract class GameList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    protected int id;
 
     @Column(name = "game_id")
-    private int gameId;
+    protected int gameId;
 
     @Column(name = "user_rating")
-    private int userRating;
+    protected int userRating;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    protected User user;
 }
