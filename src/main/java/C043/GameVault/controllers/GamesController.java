@@ -20,7 +20,6 @@ public class GamesController {
 
     @GetMapping
     public ResponseEntity<String> getGames(@RequestParam(required = false) Map<String, String> allParams) {
-        System.out.println(allParams);
         if (allParams != null && allParams.get("platforms") == null && allParams.get("genres") == null)
             return restTemplate.getForEntity(this.url + "/games?key=" + this.key +
                             "&search=" + allParams.getOrDefault("search", "") +
