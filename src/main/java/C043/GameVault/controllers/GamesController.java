@@ -53,6 +53,5 @@ public class GamesController {
     @GetMapping("/{gameId}")
     public ResponseEntity<String> getGameById(@PathVariable String gameId) {
         return restTemplate.getForEntity(this.url + "/games/" + gameId + "?key=" + this.key, String.class);
-
     }
 }
