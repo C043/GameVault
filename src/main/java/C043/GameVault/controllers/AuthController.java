@@ -5,6 +5,7 @@ import C043.GameVault.payloads.AuthDTO;
 import C043.GameVault.payloads.NewUserDTO;
 import C043.GameVault.payloads.RespDTO;
 import C043.GameVault.payloads.TokenRespDTO;
+import C043.GameVault.security.JWTTools;
 import C043.GameVault.security.Validation;
 import C043.GameVault.services.AuthService;
 import C043.GameVault.services.UserService;
@@ -26,6 +27,9 @@ public class AuthController {
     @Autowired
     private Validation validation;
 
+    @Autowired
+    private JWTTools jTools;
+
     @PostMapping("/login")
     public TokenRespDTO login(@RequestBody AuthDTO body) {
         String token = this.authService.checkCredentialsAndGenerateToken(body);
@@ -38,5 +42,11 @@ public class AuthController {
         this.validation.validate(validation);
         User newUser = this.userService.registerUser(body);
         return new RespDTO(newUser.getId());
+    }
+
+    @PostMapping("/me")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void checkToken(@RequestBody TokenRespDTO body) {
+        this.jTools.verifyToken(body.token());
     }
 }
