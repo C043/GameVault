@@ -1,6 +1,7 @@
 package C043.GameVault.controllers;
 
 import C043.GameVault.entities.BackLog;
+import C043.GameVault.entities.GameList;
 import C043.GameVault.entities.PlayedList;
 import C043.GameVault.entities.PlayingList;
 import C043.GameVault.entities.User;
@@ -10,6 +11,7 @@ import C043.GameVault.security.Validation;
 import C043.GameVault.services.BackLogService;
 import C043.GameVault.services.PlayedListService;
 import C043.GameVault.services.PlayingService;
+import C043.GameVault.services.GameListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,9 +37,13 @@ public class GameListController {
     @Autowired
     private Validation validation;
 
+    @Autowired
+    private GameListService gameListService;
+
     @PostMapping("/backlog")
     @ResponseStatus(HttpStatus.CREATED)
-    public RespDTO postBacklogEntry(@AuthenticationPrincipal User user, @RequestBody @Validated GameDTO body, BindingResult validation) {
+    public RespDTO postBacklogEntry(@AuthenticationPrincipal User user, @RequestBody @Validated GameDTO body,
+            BindingResult validation) {
         this.validation.validate(validation);
         BackLog newBacklog = this.backLogService.postBackLog(body, user);
         return new RespDTO(newBacklog.getId());
@@ -56,7 +62,8 @@ public class GameListController {
 
     @PostMapping("/playing")
     @ResponseStatus(HttpStatus.CREATED)
-    public RespDTO postPlayingEntry(@AuthenticationPrincipal User user, @RequestBody @Validated GameDTO body, BindingResult validation) {
+    public RespDTO postPlayingEntry(@AuthenticationPrincipal User user, @RequestBody @Validated GameDTO body,
+            BindingResult validation) {
         this.validation.validate(validation);
         PlayingList newPlayingList = this.playingService.postPlaying(body, user);
         return new RespDTO(newPlayingList.getId());
@@ -75,7 +82,8 @@ public class GameListController {
 
     @PostMapping("/played")
     @ResponseStatus(HttpStatus.CREATED)
-    public RespDTO postPlayedList(@AuthenticationPrincipal User user, @RequestBody @Validated GameDTO body, BindingResult validation) {
+    public RespDTO postPlayedList(@AuthenticationPrincipal User user, @RequestBody @Validated GameDTO body,
+            BindingResult validation) {
         this.validation.validate(validation);
         PlayedList newPlayedList = this.playedListService.postPlaying(body, user);
         return new RespDTO(newPlayedList.getId());
@@ -90,5 +98,10 @@ public class GameListController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePlayed(@AuthenticationPrincipal User user, @PathVariable int playedId) {
         this.playedListService.deletePlayedList(user, playedId);
+    }
+
+    @GetMapping
+    public List<GameList> getAllGames(@AuthenticationPrincipal User user) {
+        return this.gameListService.getAllGames(user);
     }
 }
