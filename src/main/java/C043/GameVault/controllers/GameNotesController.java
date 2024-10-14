@@ -6,6 +6,7 @@ import C043.GameVault.payloads.NotesDTO;
 import C043.GameVault.payloads.RespDTO;
 import C043.GameVault.services.GameNotesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,12 @@ public class GameNotesController {
                              @RequestBody NotesDTO body) {
         GameNote updatedGameNote = this.gameNotesService.editGameNote(user, gameId, body);
         return new RespDTO(updatedGameNote.getId());
+    }
+
+    @DeleteMapping("/{gameId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteNotes(@AuthenticationPrincipal User user,
+                            @PathVariable int gameId) {
+        this.gameNotesService.deleteGameNotes(user, gameId);
     }
 }

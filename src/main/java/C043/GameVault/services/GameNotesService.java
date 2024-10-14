@@ -29,4 +29,9 @@ public class GameNotesService {
         found.setNotes(body.notes());
         return this.gameNotesRepository.save(found);
     }
+
+    public void deleteGameNotes(User user, int gameId) {
+        GameNote found = this.getGameNote(user, gameId);
+        this.gameNotesRepository.delete(found);
+    }
 }
