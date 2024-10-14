@@ -27,4 +27,12 @@ public class GameNotesController {
                                 @PathVariable int gameId) {
         return this.gameNotesService.getGameNote(user, gameId);
     }
+
+    @PostMapping("/{gameId}")
+    public RespDTO editNotes(@AuthenticationPrincipal User user,
+                             @PathVariable int gameId,
+                             @RequestBody NotesDTO body) {
+        GameNote updatedGameNote = this.gameNotesService.editGameNote(user, gameId, body);
+        return new RespDTO(updatedGameNote.getId());
+    }
 }
