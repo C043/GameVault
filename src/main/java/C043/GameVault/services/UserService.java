@@ -5,10 +5,14 @@ import C043.GameVault.exceptions.BadRequestException;
 import C043.GameVault.exceptions.NotFoundException;
 import C043.GameVault.payloads.NewUserDTO;
 import C043.GameVault.repositories.UserRepository;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -18,6 +22,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder bcrypt;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
@@ -48,5 +55,12 @@ public class UserService {
         newUser.setAvatar("https://ui-avatars.com/api/?background=random&name=" + body.username());
         // To Do: settare una cover random a tema videogiochi
         return this.userRepository.save(newUser);
+    }
+
+    public void uploadImage(MultipartFile file, User currentUser) throws IOException {
+        String url = (String) cloudinary.uploader().upload(file.getBytes(),
+                ObjectUtils.emptyMap()).get("url");
+        currentUser.setAvatar(url);
+        this.userRepository.save(currentUser);
     }
 }
