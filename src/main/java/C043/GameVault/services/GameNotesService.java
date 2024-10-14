@@ -16,4 +16,8 @@ public class GameNotesService {
         return this.gameNotesRepository.save(new GameNote(body.notes(),
                 body.gameId(), user));
     }
+
+    public GameNote getGameNote(User user, int gameId) {
+        return this.gameNotesRepository.findByUserAndGameId(user, gameId);
+    }
 }

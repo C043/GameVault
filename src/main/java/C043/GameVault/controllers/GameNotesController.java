@@ -7,10 +7,7 @@ import C043.GameVault.payloads.RespDTO;
 import C043.GameVault.services.GameNotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/notes")
@@ -23,5 +20,11 @@ public class GameNotesController {
                              @RequestBody NotesDTO body) {
         GameNote newGameNote = this.gameNotesService.postGameNote(user, body);
         return new RespDTO(newGameNote.getId());
+    }
+
+    @GetMapping("/{gameId}")
+    public GameNote getGameNote(@AuthenticationPrincipal User user,
+                                @PathVariable int gameId) {
+        return this.gameNotesService.getGameNote(user, gameId);
     }
 }
