@@ -17,6 +17,7 @@ public class GameNotesController {
     private GameNotesService gameNotesService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public RespDTO postNotes(@AuthenticationPrincipal User user,
                              @RequestBody NotesDTO body) {
         GameNote newGameNote = this.gameNotesService.postGameNote(user, body);
@@ -27,14 +28,6 @@ public class GameNotesController {
     public GameNote getGameNote(@AuthenticationPrincipal User user,
                                 @PathVariable int gameId) {
         return this.gameNotesService.getGameNote(user, gameId);
-    }
-
-    @PostMapping("/{gameId}")
-    public RespDTO editNotes(@AuthenticationPrincipal User user,
-                             @PathVariable int gameId,
-                             @RequestBody NotesDTO body) {
-        GameNote updatedGameNote = this.gameNotesService.editGameNote(user, gameId, body);
-        return new RespDTO(updatedGameNote.getId());
     }
 
     @DeleteMapping("/{gameId}")

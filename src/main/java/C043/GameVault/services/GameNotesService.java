@@ -14,12 +14,16 @@ public class GameNotesService {
     private GameNotesRepository gameNotesRepository;
 
     public GameNote postGameNote(User user, NotesDTO body) {
+        GameNote found = this.gameNotesRepository.findByUserAndGameId(user,
+                body.gameId());
+        if (found != null) return this.editGameNote(user, body.gameId(), body);
         return this.gameNotesRepository.save(new GameNote(body.notes(),
                 body.gameId(), user));
     }
 
     public GameNote getGameNote(User user, int gameId) {
-        GameNote found = this.gameNotesRepository.findByUserAndGameId(user, gameId);
+        GameNote found =
+                this.gameNotesRepository.findByUserAndGameId(user, gameId);
         if (found == null) throw new NotFoundException("GameNotes not found");
         return found;
     }
