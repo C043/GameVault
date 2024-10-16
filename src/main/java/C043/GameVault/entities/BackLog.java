@@ -12,6 +12,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class BackLog extends GameList {
+    public BackLog(int gameId, int userRating, User user) {
+        super(gameId, userRating, user);
+    }
+
     public BackLog(int gameId, User user) {
         super(gameId, user);
     }
