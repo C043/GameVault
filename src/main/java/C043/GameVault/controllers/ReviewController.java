@@ -48,4 +48,11 @@ public class ReviewController {
         Review updatedReview = this.reviewService.updateReview(user, body);
         return new RespDTO(updatedReview.getId());
     }
+
+    @DeleteMapping("/{gameId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteReview(@AuthenticationPrincipal User user,
+                             @PathVariable int gameId) {
+        this.reviewService.deleteReview(user, gameId);
+    }
 }
