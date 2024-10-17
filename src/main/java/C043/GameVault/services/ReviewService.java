@@ -8,6 +8,8 @@ import C043.GameVault.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReviewService {
     @Autowired
@@ -21,5 +23,9 @@ public class ReviewService {
         Review newReview = new Review(body.gameId(), body.rating(), user,
                 body.content());
         return this.reviewRepository.save(newReview);
+    }
+
+    public List<Review> getAllReviews(int gameId) {
+        return this.reviewRepository.findByGameId(gameId);
     }
 }

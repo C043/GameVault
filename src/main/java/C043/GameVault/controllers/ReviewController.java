@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
@@ -30,5 +32,10 @@ public class ReviewController {
         this.validation.validate(validation);
         Review newReview = this.reviewService.postReview(user, body);
         return new RespDTO(newReview.getId());
+    }
+
+    @GetMapping("/{gameId}")
+    public List<Review> getAllReviews(@PathVariable int gameId) {
+        return this.reviewService.getAllReviews(gameId);
     }
 }
