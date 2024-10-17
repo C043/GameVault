@@ -39,9 +39,8 @@ public class ReviewController {
         return this.reviewService.getAllReviews(gameId);
     }
 
-    @PutMapping("/{gameId}")
+    @PutMapping
     public RespDTO updateReview(@AuthenticationPrincipal User user,
-                                @PathVariable int gameId,
                                 @RequestBody @Validated ReviewDTO body,
                                 BindingResult validation) {
         this.validation.validate(validation);
@@ -54,5 +53,11 @@ public class ReviewController {
     public void deleteReview(@AuthenticationPrincipal User user,
                              @PathVariable int gameId) {
         this.reviewService.deleteReview(user, gameId);
+    }
+
+    @GetMapping("/me/{gameId}")
+    public Review getMyReview(@AuthenticationPrincipal User user,
+                              @PathVariable int gameId) {
+        return this.reviewService.getUserReview(user, gameId);
     }
 }
