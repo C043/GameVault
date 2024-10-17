@@ -38,4 +38,14 @@ public class ReviewController {
     public List<Review> getAllReviews(@PathVariable int gameId) {
         return this.reviewService.getAllReviews(gameId);
     }
+
+    @PutMapping("/{gameId}")
+    public RespDTO updateReview(@AuthenticationPrincipal User user,
+                                @PathVariable int gameId,
+                                @RequestBody @Validated ReviewDTO body,
+                                BindingResult validation) {
+        this.validation.validate(validation);
+        Review updatedReview = this.reviewService.updateReview(user, body);
+        return new RespDTO(updatedReview.getId());
+    }
 }
