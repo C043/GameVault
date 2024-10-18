@@ -40,4 +40,16 @@ public class CustomListController {
             @AuthenticationPrincipal User user) {
         return this.customListService.getAllCustomLists(user);
     }
+
+    @PutMapping("/me/{customListId}")
+    public RespDTO editTitle(@AuthenticationPrincipal User user,
+                             @RequestBody @Validated CustomListDTO body,
+                             @PathVariable int customListId,
+                             BindingResult validation) {
+        this.validation.validate(validation);
+        CustomList updatedCustomList =
+                this.customListService.updateCustomListTitle(user, body,
+                        customListId);
+        return new RespDTO(updatedCustomList.getId());
+    }
 }
