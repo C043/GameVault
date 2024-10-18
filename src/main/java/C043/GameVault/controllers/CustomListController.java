@@ -47,6 +47,11 @@ public class CustomListController {
         return this.customListService.getAllCustomLists(user);
     }
 
+    @GetMapping("/me/{customListId}")
+    public CustomList getSingleCustomList(@PathVariable int customListId) {
+        return this.customListService.getCustomList(customListId);
+    }
+
     @PutMapping("/me/{customListId}")
     public RespDTO editTitle(@AuthenticationPrincipal User user,
                              @RequestBody @Validated CustomListDTO body,
