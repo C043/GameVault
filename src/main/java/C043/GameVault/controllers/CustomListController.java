@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/customLists")
 public class CustomListController {
@@ -31,5 +33,11 @@ public class CustomListController {
         CustomList newCustomList = this.customListService.postCustomList(user
                 , body);
         return new RespDTO(newCustomList.getId());
+    }
+
+    @GetMapping("/me")
+    public List<CustomList> getAllCustomLists(
+            @AuthenticationPrincipal User user) {
+        return this.customListService.getAllCustomLists(user);
     }
 }
