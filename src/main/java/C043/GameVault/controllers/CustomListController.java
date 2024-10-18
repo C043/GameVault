@@ -41,18 +41,18 @@ public class CustomListController {
         return new RespDTO(newCustomList.getId());
     }
 
-    @GetMapping("/me")
+    @GetMapping
     public List<CustomList> getAllCustomLists(
             @AuthenticationPrincipal User user) {
         return this.customListService.getAllCustomLists(user);
     }
 
-    @GetMapping("/me/{customListId}")
+    @GetMapping("/{customListId}")
     public CustomList getSingleCustomList(@PathVariable int customListId) {
         return this.customListService.getCustomList(customListId);
     }
 
-    @PutMapping("/me/{customListId}")
+    @PutMapping("/{customListId}")
     public RespDTO editTitle(@AuthenticationPrincipal User user,
                              @RequestBody @Validated CustomListDTO body,
                              @PathVariable int customListId,
@@ -64,14 +64,14 @@ public class CustomListController {
         return new RespDTO(updatedCustomList.getId());
     }
 
-    @DeleteMapping("/me/{customListId}")
+    @DeleteMapping("/{customListId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomList(@AuthenticationPrincipal User user,
                                  @PathVariable int customListId) {
         this.customListService.deleteCustomList(user, customListId);
     }
 
-    @PostMapping("/me/{customListId}")
+    @PostMapping("/{customListId}")
     public RespDTO postCustomListGame(@AuthenticationPrincipal User user,
                                       @PathVariable int customListId,
                                       @RequestBody @Validated
@@ -82,7 +82,7 @@ public class CustomListController {
         return new RespDTO(newGame.getId());
     }
 
-    @DeleteMapping("/me/{customListId}/{gameId}")
+    @DeleteMapping("/{customListId}/{gameId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomListGame(@AuthenticationPrincipal User user,
                                      @PathVariable int customListId,
