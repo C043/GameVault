@@ -1,10 +1,13 @@
 package C043.GameVault.controllers;
 
 import C043.GameVault.entities.CustomList;
+import C043.GameVault.entities.CustomListGame;
 import C043.GameVault.entities.User;
 import C043.GameVault.payloads.CustomListDTO;
+import C043.GameVault.payloads.CustomListGameDTO;
 import C043.GameVault.payloads.RespDTO;
 import C043.GameVault.security.Validation;
+import C043.GameVault.services.CustomListGameService;
 import C043.GameVault.services.CustomListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,9 @@ public class CustomListController {
 
     @Autowired
     private Validation validation;
+
+    @Autowired
+    private CustomListGameService customListGameService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -59,4 +65,16 @@ public class CustomListController {
                                  @PathVariable int customListId) {
         this.customListService.deleteCustomList(user, customListId);
     }
+
+    @PostMapping("/me/{customListId}")
+    public RespDTO postCustomListGame(@AuthenticationPrincipal User user,
+                                      @PathVariable int customListId,
+                                      @RequestBody @Validated
+                                      CustomListGameDTO body) {
+        CustomListGame newGame =
+                this.customListGameService.postCustomListGame(user,
+                        customListId, body);
+        return new RespDTO(newGame.getGameId());
+    }
 }
+
