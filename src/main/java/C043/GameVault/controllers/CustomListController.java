@@ -74,7 +74,16 @@ public class CustomListController {
         CustomListGame newGame =
                 this.customListGameService.postCustomListGame(user,
                         customListId, body);
-        return new RespDTO(newGame.getGameId());
+        return new RespDTO(newGame.getId());
+    }
+
+    @DeleteMapping("/me/{customListId}/{gameId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomListGame(@AuthenticationPrincipal User user,
+                                     @PathVariable int customListId,
+                                     @PathVariable int gameId) {
+        this.customListGameService.deleteCustomListGame(user, customListId,
+                gameId);
     }
 }
 
