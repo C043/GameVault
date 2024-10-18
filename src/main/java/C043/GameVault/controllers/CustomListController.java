@@ -52,4 +52,11 @@ public class CustomListController {
                         customListId);
         return new RespDTO(updatedCustomList.getId());
     }
+
+    @DeleteMapping("/me/{customListId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomList(@AuthenticationPrincipal User user,
+                                 @PathVariable int customListId) {
+        this.customListService.deleteCustomList(user, customListId);
+    }
 }

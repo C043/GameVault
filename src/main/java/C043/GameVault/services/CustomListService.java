@@ -38,4 +38,12 @@ public class CustomListService {
         found.setTitle(body.title());
         return this.customListRepository.save(found);
     }
+
+    public void deleteCustomList(User user, int id) {
+        CustomList found = this.getCustomList(id);
+        if (found.getUser().getId() != user.getId())
+            throw new UnauthorizedException(
+                    "Not authorized to delete this list");
+        this.customListRepository.delete(found);
+    }
 }
