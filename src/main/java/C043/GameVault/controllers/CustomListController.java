@@ -52,6 +52,12 @@ public class CustomListController {
         return this.customListService.getCustomList(customListId);
     }
 
+    @GetMapping("/games/{customListId}")
+    public List<CustomListGame> getAllCustomListGames(
+            @PathVariable int customListId) {
+        return this.customListGameService.getAllCustomListGames(customListId);
+    }
+
     @PutMapping("/{customListId}")
     public RespDTO editTitle(@AuthenticationPrincipal User user,
                              @RequestBody @Validated CustomListDTO body,
@@ -91,4 +97,3 @@ public class CustomListController {
                 gameId);
     }
 }
-

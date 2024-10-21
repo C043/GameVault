@@ -10,6 +10,8 @@ import C043.GameVault.repositories.CustomListGameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomListGameService {
     @Autowired
@@ -41,5 +43,10 @@ public class CustomListGameService {
         CustomListGame customGameFound = this.customListGameRepository.
                 findByCustomListAndGameId(foundList, gameId);
         this.customListGameRepository.delete(customGameFound);
+    }
+
+    public List<CustomListGame> getAllCustomListGames(int customListId) {
+        CustomList found = this.customListService.getCustomList(customListId);
+        return this.customListGameRepository.findByCustomList(found);
     }
 }
