@@ -23,7 +23,9 @@ import java.util.List;
 public class JWTCheckFilter extends OncePerRequestFilter {
     private final List<AntPathRequestMatcher> excludeList =
             Arrays.asList(AntPathRequestMatcher.antMatcher("/auth/**"),
-                    AntPathRequestMatcher.antMatcher("/games/**"));
+                    AntPathRequestMatcher.antMatcher("/games/**"),
+                    AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
+                    AntPathRequestMatcher.antMatcher("/swagger-ui/**"));
     @Autowired
     private JWTTools jwtTools;
     @Autowired
