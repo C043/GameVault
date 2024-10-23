@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>C043</groupId>
-    <artifactId>GameVault</artifactId>
+    <artifactId>PowerUp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>GameVault</name>
     <description>Your game collection on the go (backend)</description>
