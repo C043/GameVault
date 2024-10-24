@@ -31,7 +31,9 @@ public class AuthController {
     private JWTTools jTools;
 
     @PostMapping("/login")
-    public TokenRespDTO login(@RequestBody AuthDTO body) {
+    public TokenRespDTO login(@RequestBody @Validated AuthDTO body,
+                              BindingResult validation) {
+        this.validation.validate(validation);
         String token = this.authService.checkCredentialsAndGenerateToken(body);
         return new TokenRespDTO(token);
     }
