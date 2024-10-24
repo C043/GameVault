@@ -9,25 +9,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class PowerUpApplicationTests {
     @Autowired
-    AuthController authController;
+    private AuthController authController;
 
     @Autowired
-    CustomListController customListController;
+    private CustomListController customListController;
 
     @Autowired
-    GameListController gameListController;
+    private GameListController gameListController;
 
     @Autowired
-    GameNotesController gameNotesController;
+    private GameNotesController gameNotesController;
 
     @Autowired
-    GamesController gamesController;
+    private GamesController gamesController;
 
     @Autowired
-    ReviewController reviewController;
+    private ReviewController reviewController;
 
     @Autowired
-    UserController userController;
+    private UserController userController;
 
     @Test
     void contextLoads() {
