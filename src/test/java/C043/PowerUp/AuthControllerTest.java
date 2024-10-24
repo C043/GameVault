@@ -63,7 +63,8 @@ public class AuthControllerTest {
     void loginTest() throws Exception {
         AuthDTO loginUser = new AuthDTO("mariofragnitoph@gmail.com",
                 "12345678");
-       
+
+
         mockMvc.perform(post("/auth/login")
                         .content(asJsonString(loginUser))
                         .contentType(MediaType.APPLICATION_JSON)
