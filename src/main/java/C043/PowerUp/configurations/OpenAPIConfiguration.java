@@ -15,8 +15,8 @@ public class OpenAPIConfiguration {
     @Bean
     public OpenAPI defineOpenAPI() {
         Server server = new Server();
-        server.setUrl("http://localhost:3001");
-        server.setDescription("Development");
+        server.setUrl("https://shaky-kathryne-c043-9167113e.koyeb.app");
+        server.setDescription("Production");
 
         Contact myContact = new Contact();
         myContact.setName("Mario Fragnito");
