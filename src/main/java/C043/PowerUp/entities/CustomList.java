@@ -1,7 +1,11 @@
 package C043.PowerUp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,6 +24,10 @@ public class CustomList {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "customList", cascade = CascadeType.REMOVE)
+    private List<CustomListGame> customListGameList = new ArrayList<>();
 
     public CustomList(String title, User user) {
         this.title = title;
